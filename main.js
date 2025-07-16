@@ -18,7 +18,7 @@ window.addEventListener('resize', () => {
 let choice = [];
 
 let rr = 0;
-let speed = 0.1;
+let speed = 0.3;
 let acc = 0;
 const draw = () => {
   const { width, height } = canvas;
@@ -98,7 +98,7 @@ const id = setInterval(() => {
     resultw.appendChild(result);
     let t = 90;
     const id0 = setInterval(() => {
-      t -= 0.2;
+      t -= 1;
       resultw.style.backgroundColor = `rgba(0,0,0,${Math.min((90 - t) / 90, 0.5)})`;
       if (t > 0) {
         result.style.transform = `rotateX(${t}deg)`;
@@ -106,12 +106,12 @@ const id = setInterval(() => {
         result.style.transform = 'rotateX(0deg)';
         clearInterval(id0);
       }
-    }, 0);
+    }, 20);
   }
-}, 0);
+}, 20);
 
 canvas.addEventListener('click', () => {
-  acc = -0.0001;
+  acc = -0.0008;
 });
 
 const parts = document.createElement('div');
