@@ -26,8 +26,12 @@
   animation: 0.5s ease-in goes-black;
 
   perspective: 200px;
-  perspective-origin: 50% 50%;
+  perspective-origin: 50% calc(50vh + 0.5cap);
   transform-origin: center;
+
+  font-size: 40vw;
+  font-family: monospace;
+  font-weight: bold;
 
   & > .result {
     &::before {
@@ -44,9 +48,6 @@
 
     user-select: none;
 
-    font-family: monospace;
-    font-size: 40vw;
-    font-weight: bold;
     & > span {
       background: linear-gradient(to bottom right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
       background-clip: text;
