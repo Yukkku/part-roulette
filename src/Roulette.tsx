@@ -2,16 +2,10 @@ import { For, createMemo, createSignal, onMount, onCleanup, type JSX } from "sol
 import { type Entry } from "./Setting.tsx";
 import style from "./Roulette.module.css";
 
-enum RouletteStateType {
-  Stopping,
-  Accelerating,
-  Rotating,
-  Slowingdown,
-}
-type RouletteState = { type: RouletteStateType.Stopping }
-  | { type: RouletteStateType.Accelerating, start: number }
-  | { type: RouletteStateType.Rotating, offset: number }
-  | { type: RouletteStateType.Slowingdown, stop: number, offset: number, label: string };
+type RouletteState = { type: "stopping" }
+  | { type: "accelerating", start: number }
+  | { type: "rotating", offset: number }
+  | { type: "slowingdown", stop: number, offset: number, label: string };
 
 export default (props: { entries: Entry[], onDecision?: (label: string) => unknown }) => {
   const pieces = createMemo(() => {
@@ -57,21 +51,21 @@ export default (props: { entries: Entry[], onDecision?: (label: string) => unkno
     let reqId: number | null = null;
     requestAnimationFrame((timestamp) => {
       last = timestamp;
-      state = { type: RouletteStateType.Accelerating, start: timestamp + 500 };
+      state = { type: "accelerating", start: timestamp + 500 };
       reqId = requestAnimationFrame(animation);
     });
     const animation = (timestamp: number) => {
       last = timestamp;
-      if (state.type === RouletteStateType.Accelerating) {
+      if (state.type === "accelerating") {
         const t = timestamp - state.start;
-        if (t >= 3000) state = { type: RouletteStateType.Rotating, offset: state.start + 1500 };
+        if (t >= 3000) state = { type: "rotating", offset: state.start + 1500 };
         else if (t >= 0) setRot(t ** 2 / 6000);
         else setRot(0);
       }
-      if (state.type === RouletteStateType.Rotating) {
+      if (state.type === "rotating") {
         setRot(timestamp - state.offset);
       }
-      if (state.type === RouletteStateType.Slowingdown) {
+      if (state.type === "slowingdown") {
         const t = state.stop - timestamp;
         if (t >= 10000) setRot(5000 - t + state.offset);
         else if (t >= 0) setRot(t ** 2 / -20000 + state.offset);
@@ -86,7 +80,7 @@ export default (props: { entries: Entry[], onDecision?: (label: string) => unkno
       reqId = requestAnimationFrame(animation);
     }
     onclick = () => {
-      if (state.type !== RouletteStateType.Rotating) return;
+      if (state.type !== "rotating") return;
       const [offset, label] = (() => {
         const entries = props.entries;
         const population = entries.reduce((c, { count }) => c + count, 0);
@@ -110,7 +104,7 @@ export default (props: { entries: Entry[], onDecision?: (label: string) => unkno
       })();
       const nowRot = rot();
       const ad = ((offset - (nowRot + 5000)) % 360 + 360) % 360;
-      state = { type: RouletteStateType.Slowingdown, stop: last + ad + 10000, offset, label };
+      state = { type: "slowingdown", stop: last + ad + 10000, offset, label };
     };
     onCleanup(() => {
       if (reqId !== null) cancelAnimationFrame(reqId);
