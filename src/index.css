@@ -1,0 +1,12 @@
+:root {
+  color-scheme: light dark;
+  font-family: sans-serif;
+  background-color: var(--back-color);
+  color: var(--text-color);
+
+  --text-color: rgb(20 20 20);
+  --back-color: rgb(255 255 255);
+  --button-color: rgb(80 80 80);
+
+  --result-back-color: rgb(0 0 0 / 0.7);
+}

@@ -1,0 +1,124 @@
+.setting {
+  font-family: monospace;
+  font-size: 2.5em;
+
+  & > .entry {
+    height: 1.5em;
+    display: flex;
+    gap: 0.5em;
+    margin: 0.5em 0;
+    align-items: center;
+
+    & > input {
+      background-color: transparent;
+      color: var(--text-color);
+      font: inherit;
+      outline: none;
+      padding: 0;
+      border: 0;
+      &.label {
+        flex: auto;
+        min-width: 0;
+      }
+      &.count {
+        text-align: center;
+        width: 2em;
+      }
+    }
+
+    & > .delete {
+      flex: none;
+      border-radius: 0.5em;
+      width: 1em;
+      height: 1em;
+      cursor: pointer;
+      user-select: none;
+      background-color: hsl(calc(var(--color-index) * 1turn) 100% 40%);
+      &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: var(--back-color);
+        clip-path: polygon(
+          20% 45%,
+          20% 55%,
+          80% 55%,
+          80% 45%
+        );
+      }
+    }
+
+    & > :is(.incr, .decr) {
+      flex: none;
+      width: calc(sqrt(3) * 0.5em);
+      height: 1em;
+      cursor: pointer;
+      user-select: none;
+      background-color: var(--button-color);
+
+      &.incr {
+        clip-path: polygon(0 0, 0 100%, 100% 50%);
+      }
+      &.decr {
+        clip-path: polygon(0 50%, 100% 100%, 100% 0);
+      }
+      &.disable {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  & > .add {
+    margin: 0.75em 0;
+    border-radius: 0.5em;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--button-color);
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: var(--back-color);
+      clip-path: polygon(
+        20% 45%,
+        20% 55%,
+        45% 55%,
+        45% 80%,
+        55% 80%,
+        55% 55%,
+        80% 55%,
+        80% 45%,
+        55% 45%,
+        55% 20%,
+        45% 20%,
+        45% 45%
+      );
+    }
+  }
+
+  & > .done {
+    margin: 0.5em auto;
+    border-radius: 0.75em;
+    border: 2px solid var(--button-color);
+    width: 5em;
+    height: 1.5em;
+    background: linear-gradient(to bottom right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #fff;
+    -webkit-text-stroke: 1.5px #000;
+    &::before {
+      content: "";
+      display: inline-block;
+      height: 1.5em;
+      vertical-align: calc(0.5cap - 0.75em);
+    }
+  }
+}
