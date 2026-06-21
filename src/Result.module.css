@@ -25,7 +25,7 @@
 
   animation: 0.5s ease-in goes-black;
 
-  perspective: 200px;
+  perspective: 1em;
   perspective-origin: 50% calc(50vh + 0.5cap);
   transform-origin: center;
 
